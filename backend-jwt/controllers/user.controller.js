@@ -1,5 +1,6 @@
 import { generarJwt } from "../helpers/generar-jwt.js";
 import { newConnection } from "../db/database.js";
+import bcrypt  from "bcrypt"
 
 export const session = async (req, res) => {
   return res.json({
@@ -60,7 +61,6 @@ export const logout = (req, res) => {
 };
 
 export const register = async (req, res) => {
-  ctrl.register = async (req, res) => {
     // Desestructuramos los datos que vienen del cuerpo de la peticion.
     const { username, password } = req.body;
 
@@ -74,14 +74,14 @@ export const register = async (req, res) => {
     const hashContrasenia = bcrypt.hashSync(password, 10); // El segundo parametro es el numero de veces que se ejecuta el algoritmo de encriptación.
 
     // Ejecutamos la consulta.
-    await connection.query(
+    const xd = await connection.query(
       "INSERT INTO users (username, password) VALUES (?,?)",
       [username, hashContrasenia]
     );
+    console.log(xd);
 
     // Respondemos a nuestro cliente
     res.json({
       msg: "Registrado correctamente",
     });
   };
-};
