@@ -70,15 +70,12 @@ export const register = async (req, res) => {
     // Creamos la consulta.
     const sql = "INSERT INTO users (username, password) VALUES (?,?)";
 
-    // Encriptamos la contraseña utilizando la libreria bcrypt.
-    const hashContrasenia = bcrypt.hashSync(password, 10); // El segundo parametro es el numero de veces que se ejecuta el algoritmo de encriptación.
-
     // Ejecutamos la consulta.
-    const xd = await connection.query(
+    const insercion = await connection.query(
       "INSERT INTO users (username, password) VALUES (?,?)",
-      [username, hashContrasenia]
+      [username, password]
     );
-    console.log(xd);
+    console.log(insercion);
 
     // Respondemos a nuestro cliente
     res.json({

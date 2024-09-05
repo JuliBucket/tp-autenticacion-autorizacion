@@ -1,41 +1,42 @@
-const formulario = document.querySelector("#formulario");
-const inputNodes = document.querySelectorAll("form input");
+document.querySelector("#register-form").addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-console.log(inputNodes);
+  const username = document.querySelector('#username').value;
+  const password = document.querySelector('#password').value;
 
-const register = async (e) => {
+  if (!username || !password) {
+    document.getElementById('message').innerText = 'Por favor, completa todos los campos.';
+    return;
+}
 
-  e.preventDefault()
-  
-  const user = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  console.log(user);
-  console.log(password);
-
-  const peticion = await fetch("http://localhost:3000/register", {
-    method: "POST",
-    body: JSON.stringify({username, password}),
-    headers: {
-      "Content-type": "application/json"
+try {
+    const response = await fetch('http://localhost:4000/register', {
+        method: 'POST',
+        credentials: 'include', // Importante para enviar las cookies de sesión
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    
+    if(!response.ok) {
+        divError.innerText = 'Credenciales inválidas';
+        divError.classList.add('bg-danger', 'text-white', 'text-center', 'rounded', 'p-2', 'mt-3');
+        
+        setTimeout(() => {
+            divError.hidden = true;
+        }, 3500);
+        
+        return;
     }
-  })
-
-    // Convertimos en json la respuesta.
-    const respuesta = await peticion.json();
-    // En caso de que falle la peticion, mostrar el mensaje de error.
-    if(!peticion.ok){
-        alert(respuesta.msg)
-    } else {
-
-        //Caso contrario, mostramos el mensaje.
-        alert(respuesta.msg)
-
-        // Redirigimos al usuario al login.
-        location.href = 'index.html'
-    }
+    
+    const data = await response.json();
+    console.log(data);
+    window.location.href = 'index.html';
+    
+} catch (error) {
 
 }
 
 
-formulario.addEventListener('submit', register)
-
+});
