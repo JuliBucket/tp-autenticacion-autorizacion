@@ -3,10 +3,9 @@ import { SECRET_KEY } from '../config/env.js';
 
 export const generarJwt = ( userId ) => {
     return new Promise( ( resolve, reject ) => {
-        console.log("llegó :v", userId);
         const payload = { userId };
         jwt.sign( payload, SECRET_KEY, {
-            expiresIn: '4h'
+            expiresIn: '5h'
         }, ( error, token ) => {
             if ( error ) {
                 

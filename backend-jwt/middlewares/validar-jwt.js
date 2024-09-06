@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { SECRET_KEY } from '../config/config.js';
+import { SECRET_KEY } from '../config/env.js';
 import { newConnection } from '../db/database.js';
 
 const connection = await newConnection()

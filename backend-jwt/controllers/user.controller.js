@@ -1,6 +1,5 @@
 import { generarJwt } from "../helpers/generar-jwt.js";
 import { newConnection } from "../db/database.js";
-import bcrypt  from "bcrypt"
 
 export const session = async (req, res) => {
   return res.json({
@@ -68,7 +67,6 @@ export const register = async (req, res) => {
     const connection = await newConnection();
 
     // Creamos la consulta.
-    const sql = "INSERT INTO users (username, password) VALUES (?,?)";
 
     // Ejecutamos la consulta.
     const insercion = await connection.query(
